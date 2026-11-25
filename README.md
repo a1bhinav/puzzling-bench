@@ -185,7 +185,9 @@ python3 scripts/build_v1.py --proc data/processed --out data/v1 --images data/im
 ```
 
 The image host enforces a per-IP limit of roughly 7 requests per second; `fetch_images.py` respects it and
-resumes after an interruption.
+resumes after an interruption. Stack Exchange-hosted images posted before 2023-12-08 are also archived in the
+[Stack Exchange Image Dataset](https://github.com/Franck-Dernoncourt/Stack-Exchange-Image-Dataset) (Dernoncourt, 2023;
+doi:10.5281/zenodo.10465913).
 
 ## License and attribution
 
