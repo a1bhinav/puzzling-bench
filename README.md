@@ -6,8 +6,10 @@ Answers** ([arXiv:XXXX.XXXXX](https://arxiv.org/abs/XXXX.XXXXX)).
 Puzzling-Bench is a benchmark of 23,777 puzzles from [Puzzling Stack Exchange](https://puzzling.stackexchange.com),
 each paired with the answer its own author accepted: riddles, ciphers, logic grids, lateral-thinking problems,
 wordplay and recreational mathematics posted between May 2014 and June 2026. Every puzzle carries the question
-(with and without the asker's spoiler-tagged hints), the accepted answer, a short reference answer, community
-tags, a creation date and full attribution metadata.
+(with and without the asker's spoiler-tagged hints), the accepted answer, a short answer taken from it
+(`short_answer`: the first spoiler block of the accepted answer, else its first paragraph; all 23,777 puzzles),
+community tags, a creation date and full attribution metadata. For the 355 puzzles of Pilot-255 and Img-100 the
+release also has LLM-extracted reference answers (`results/references/`), checked on a 50-puzzle human review.
 
 - **Dataset:** <https://huggingface.co/datasets/puzzling-bench/puzzling-bench> (CC BY-SA 4.0). It contains the
   puzzles, the referenced images, and every per-row model output and judge verdict behind the paper.
@@ -36,7 +38,7 @@ content through 2026-06-30 23:58 UTC). The paper evaluates on three sets:
 | Path | Contents |
 |---|---|
 | `scripts/parse_dump.py`, `scripts/fetch_images.py`, `scripts/build_v1.py` | dump XML to JSONL, image download, the dataset build |
-| `scripts/extract_answers.py` | LLM extraction of the short reference answers |
+| `scripts/extract_answers.py` | LLM extraction of the reference answers for the 355 Pilot-255 and Img-100 puzzles |
 | `scripts/run_eval.py`, `scripts/score.py` | solver runs, `ANSWER:` extraction, tier-1 matching and the LLM judge, `--summarize` reports |
 | `scripts/results_table.py`, `scripts/compare_judges.py`, `scripts/failure_overlap.py`, `scripts/hint_ablation.py`, `scripts/paired_accuracy.py`, `scripts/bootstrap_ci.py`, `scripts/dataset_stats.py`, `scripts/credits_used.py` | analyses behind the tables |
 | `scripts/figures/` | the three figures |
@@ -156,12 +158,14 @@ python3 scripts/run_eval.py --v1 data/hf/puzzles.jsonl --images --ids-from data/
 
 ### How the models in the paper were reached
 
-Every model, solver or judge, was called through an OpenAI-compatible endpoint. The runs in the paper went
-through local proxies in front of two agentic command-line harnesses, referred to as *harness A* (the 2026-10
-runs) and *harness B* (the earlier Claude runs) in the paper and in the `run_meta.harness` field of the result
-files. The proxies are not part of this repository. They disabled tool use, passed the reasoning effort through,
-and attached an `x_run_meta` object (harness label, requested and served model, effort, token usage, cost,
-latency) to every reply, which `run_eval.py` stores with each row.
+Every model, solver or judge, was called through an OpenAI-compatible endpoint. The frontier-model calls in the
+paper, solvers and judges, went through local proxies in front of two agentic command-line harnesses, referred
+to as *harness A* (the 2026-10 runs) and *harness B* (the earlier Claude runs) in the paper and in the `run_meta.harness` field of the result
+files. The proxies are not part of this repository. They disabled tool use and passed the reasoning effort
+through; harness A's proxy also attached an `x_run_meta` object (harness label, requested and served model,
+effort, token usage, cost, latency) to every reply, which `run_eval.py` stores with each row as `run_meta`.
+Harness B rows and errored rows carry only the harness label, and the open-model rows in `weak_judges/` (served
+with vLLM) have no `run_meta`.
 
 ## Rebuild the dataset from the dump
 
