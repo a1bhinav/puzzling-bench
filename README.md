@@ -1,7 +1,7 @@
 # Puzzling-Bench
 
 Code for **Puzzling-Bench: Evaluating Language Models on 23,777 Human-Written Puzzles with Community-Verified
-Answers** ([arXiv:XXXX.XXXXX](https://arxiv.org/abs/XXXX.XXXXX)).
+Answers** ([arXiv:2611.34331](https://arxiv.org/abs/2611.34331)).
 
 Puzzling-Bench is a benchmark of 23,777 puzzles from [Puzzling Stack Exchange](https://puzzling.stackexchange.com),
 each paired with the answer its own author accepted: riddles, ciphers, logic grids, lateral-thinking problems,
@@ -205,7 +205,7 @@ fields for this (`url`, `answer_url`, `owner_display_name`, `owner_profile_url`,
   title         = {Puzzling-Bench: Evaluating Language Models on 23,777 Human-Written Puzzles with Community-Verified Answers},
   author        = {Sharma, Abhinav and Li, Li and Nguyen, Chien Van and Navuluru, Sai Karthik and Ni, Bo and Gao, Xiangbo and Huang, Xiaolei and Zhao, Yue and Ahmed, Nesreen K. and Derr, Tyler and Wang, Yu and Chen, Hongjie and Tu, Zhengzhong and Nguyen, Thien Huu and Rossi, Ryan A. and Dernoncourt, Franck},
   year          = {2026},
-  eprint        = {XXXX.XXXXX},
+  eprint        = {2611.34331},
   archivePrefix = {arXiv},
   primaryClass  = {cs.CL}
 }
